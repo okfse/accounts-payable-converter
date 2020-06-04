@@ -8,6 +8,8 @@ def convert(filename):
                   header=0
                   )
 
+  data.dropna(inplace=True)
+
   data = data[['faktura_nr', 'leverantor', 'leverantor_id', 'forvaltning', 'konto_nr', 'konto_text', 'belopp', 'datum']]
 
   data.insert(0, 'kopare', 2120002627)

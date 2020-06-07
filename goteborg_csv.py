@@ -23,7 +23,7 @@ def convert(filename, month):
 
   data.leverantor_id = data.leverantor_id.astype(str)
   data.leverantor_id = data.leverantor_id.apply(lambda x: '' if 'nan' in x else x)
-  data.leverantor_id = data.leverantor_id.apply(lambda x: '' if 'SAKNAS' in x else x)
+  data.leverantor_id = data.leverantor_id.apply(lambda x: x if x.isnumeric() else '')
   data.leverantor_id = data.leverantor_id.str.replace('-', '')
   data.leverantor = data.leverantor.astype(str)
   data.belopp = data.belopp.str.replace(' ', '')

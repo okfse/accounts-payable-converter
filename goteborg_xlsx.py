@@ -23,7 +23,7 @@ def convert(filename, month):
 
   data.leverantor_id = data.leverantor_id.astype(str)
   data.leverantor_id = data.leverantor_id.apply(lambda x: '' if 'nan' in x else x)
-  data.leverantor_id = data.leverantor_id.apply(lambda x: '' if 'SAKNAS' in x else x)
+  data.leverantor_id = data.leverantor_id.apply(lambda x: x if x.isnumeric() else '')
   data.leverantor_id = data.leverantor_id.str.replace('-', '')
   data.leverantor = data.leverantor.astype(str)
   data.leverantor = data.leverantor.replace(',', '')
@@ -42,3 +42,4 @@ convert('/2017/leverantorsfakturor-201704', '201704')
 convert('/2017/leverantorsfakturor-201703', '201703')
 convert('/2017/leverantorsfakturor-201702', '201702')
 convert('/2017/leverantorsfakturor-201701', '201701')
+convert('/2016/leverantorsfakturor-201601', '201601')

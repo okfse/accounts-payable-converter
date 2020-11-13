@@ -31,7 +31,9 @@ def convert(filename, month):
 
   data.to_csv(PATH + 'formatted' + filename + '-formatted.csv', index=False)
 
-convert('/2020/leverantorsfakturor-202001', '202001')
-convert('/2020/leverantorsfakturor-202002', '202002')
-convert('/2020/leverantorsfakturor-202003', '202003')
-convert('/2020/leverantorsfakturor-202004', '202004')
+convert('/2020/leverantorsfakturor-202005', '202005')
+convert('/2020/leverantorsfakturor-202006', '202006')
+convert('/2020/leverantorsfakturor-202007', '202007')
+convert('/2020/leverantorsfakturor-202008', '202008')
+convert('/2020/leverantorsfakturor-202009', '202009')
+convert('/2020/leverantorsfakturor-202010', '202010')

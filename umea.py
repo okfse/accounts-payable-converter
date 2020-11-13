@@ -1,8 +1,10 @@
 import pandas as pd
 
+PATH = 'data/umea/'
+
 def convert(filename):
   data = pd.read_csv(
-                  filename + '.csv',
+                  PATH + 'raw' + filename + '.csv',
                   sep=';',
                   names=['datum', 'forvaltning', 'leverantor', 'leverantor_id', 'konto_nr', 'konto_text', 'belopp', 'faktura_nr'],
                   header=0
@@ -25,9 +27,9 @@ def convert(filename):
   data.leverantor = data.leverantor.astype(str)
   data.leverantor = data.leverantor.apply(lambda x: 'ANONYMERAD' if '*' in x else x)
 
-  data.to_csv(filename + "-formatted.csv", index=False)
+  data.to_csv(PATH + 'formatted' + filename + "-formatted.csv", index=False)
 
 #convert("leverantorsfakturor-2017")
 #convert("leverantorsfakturor-2018")
 #convert("leverantorsfakturor-2019")
-convert("leverantorsfakturor-2020")
+convert("/leverantorsfakturor-2020")

@@ -39,12 +39,13 @@ def convert(filename):
   data.leverantor_id = data.leverantor_id.apply(lambda x: x if x.isnumeric() else '')
   data.konto_text = data.konto_nr.str[6:]
   data.konto_nr = data.konto_nr.str[:5]
+  data.konto_nr = data.konto_nr.str.strip()
   data.datum = pd.to_datetime(data.datum, format='%Y-%m-%d')
 
   data.faktura_nr.astype('object', copy=False)
   data.leverantor.astype('object', copy=False)
   data.leverantor_id.astype('object', copy=False)
-  data.konto_nr.astype('Int64', copy=False)
+  data.konto_nr.astype('float').astype('Int64', copy=False)
   data.konto_text.astype('object', copy=False)
   data.belopp.astype('float64', copy=False)
   data.kopare_text.astype('object', copy=False)
@@ -58,6 +59,9 @@ def convert(filename):
 
   data.to_csv(PATH + 'formatted/' + filename + '-formatted.csv', index=False)
 
+convert('Leverantörsfakturor 2018')
+convert('Leverantörsfakturor 2019')
+convert('Leverantörsfakturor 2020')
 convert('Leverantörsfakturor 2021-01')
 convert('Leverantörsfakturor 2021-02')
 convert('Leverantörsfakturor 2021-03')

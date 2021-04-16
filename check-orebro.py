@@ -1,5 +1,6 @@
 import html
 import urllib.request
+import os
 from bs4 import BeautifulSoup
 
 OREBRO_DOMAIN = 'https://www.orebro.se'
@@ -22,4 +23,7 @@ links = soup.find_all(
 links = [a['href'] for a in links]
 
 for link in links:
-    print(OREBRO_DOMAIN + link)
+    url = OREBRO_DOMAIN + link
+    filename = os.path.basename(url)
+    urllib.request.urlretrieve(url, filename)
+    print('\Successfully downloaded ' + filename)

@@ -24,6 +24,6 @@ links = [a['href'] for a in links]
 
 for link in links:
     url = OREBRO_DOMAIN + link
-    filename = os.path.basename(url.path)
+    filename = os.path.basename(url)
     urllib.request.urlretrieve(url, filename)
     print('\Successfully downloaded ' + filename)

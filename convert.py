@@ -55,4 +55,4 @@ def convert_orebro(source_path, target_path, file_name):
   data.projekt_kod.astype('Int64', copy=False)
   data.objekt_kod.astype('Int64', copy=False)
 
-  data.to_csv(target_path + filename + '-formatted.csv', index=False)
+  data.to_csv(target_path + file_name + '-formatted.csv', index=False)

@@ -5,12 +5,12 @@ def convert_orebro(source_path, target_path, file_name):
 
   data = pd.read_excel(
                   source_path + file_name + '.xlsx',
-                  names=['datum', 'forvaltning', 'leverantor', 'leverantor_id', 'faktura_nr', 'konto_nr', 'belopp', 'empty'],
+                  names=['datum', 'forvaltning', 'leverantor', 'leverantor_id', 'faktura_nr', 'konto_nr', 'belopp'], # , 'empty'
                   header=0
                   )
 
   # dealing with empty column in data that gets read by read_excel
-  data.drop(columns=['empty'], inplace=True)
+  # data.drop(columns=['empty'], inplace=True)
   data.dropna(inplace=True)
 
   data = data[['faktura_nr', 'leverantor', 'leverantor_id', 'forvaltning', 'konto_nr', 'belopp', 'datum']]

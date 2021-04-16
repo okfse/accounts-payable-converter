@@ -1,7 +1,6 @@
-from downloader import Downloader
-from orebro import convert as convert_orebro
 import os
-
+from downloader import Downloader
+from convert import convert_orebro
 from bs4 import BeautifulSoup
 
 OREBRO_DOMAIN = 'https://www.orebro.se'
@@ -17,16 +16,19 @@ def get_orebro_file_list():
 
 links = get_orebro_file_list()
 
-files = [
-    'Leverant%C3%B6rsfakturor%202018.xlsx',
-    'Leverant%C3%B6rsfakturor%202019.xlsx',
-    'Leverant%C3%B6rsfakturor%202020.xlsx'
-]
+# files = [
+#     'Leverant%C3%B6rsfakturor%202018.xlsx',
+#     'Leverant%C3%B6rsfakturor%202019.xlsx',
+#     'Leverant%C3%B6rsfakturor%202020.xlsx'
+# ]
+
+files = []
 
 for link in links:
     url = OREBRO_DOMAIN + link
-    #filename = Downloader.download_file(url)
-    #files += [filename]
+    filename = Downloader.download_file(url)
+    files += [filename]
 
 for filename in files:
-    convert_orebro('./', './', os.path.splitext(filename)[0])
+    print(os.path.splitext(filename)[0])
+    convert_orebro('./', './', str(os.path.splitext(filename)[0]))

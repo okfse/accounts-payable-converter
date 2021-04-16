@@ -5,7 +5,7 @@ from sshtunnel import SSHTunnelForwarder
 
 
 METABASE_TEST = '135.181.196.245'
-METABSE = 'bi.openup.open-knowledge.se'
+METABASE = 'bi.openup.open-knowledge.se'
 
 # Create an SSH tunnel
 tunnel = SSHTunnelForwarder(
@@ -23,12 +23,12 @@ tunnel.start()
 tunnel.check_tunnels()
 print(tunnel.tunnel_is_up)
 
-DATABASE_URL = 'postgresql+psycopg2://metabase:metabase@' + tunnel.local_bind_host + ':' + str(tunnel.local_bind_port) +'/data'
+DATABASE_URL = 'postgresql+psycopg2://metabase:' + os.environ.get('DATABASE_PASSWORD') + '@' + tunnel.local_bind_host + ':' + str(tunnel.local_bind_port) +'/data'
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
-# result_set = engine.execute("SELECT * FROM leverantorsreskontra WHERE kopare_text='Länsstyrelsen i Blekinge län'")
-# for r in result_set:
-#     print(r)
+result_set = engine.execute("SELECT * FROM leverantorsreskontra WHERE kopare_text='Länsstyrelsen i Blekinge län'")
+for r in result_set:
+    print(r)
 
 
 def import_data(filename):
@@ -43,7 +43,7 @@ def import_data(filename):
 
   print('Successfully imported ' + filename + '!')
 
-import_data('data/digg/formatted/2018 DIGG leverantörsfakturor-formatted.csv')
+# import_data('data/digg/formatted/2018 DIGG leverantörsfakturor-formatted.csv')
 tunnel.close()
 # import_data('data/goteborg/formatted/2019/leverantorsfakturor-201908-formatted.csv')
 # import_data('data/goteborg/formatted/2019/leverantorsfakturor-201907-formatted.csv')

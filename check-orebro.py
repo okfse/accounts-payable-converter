@@ -1,29 +1,32 @@
-import html
-import urllib.request
+from downloader import Downloader
+from orebro import convert as convert_orebro
 import os
+
 from bs4 import BeautifulSoup
 
 OREBRO_DOMAIN = 'https://www.orebro.se'
 OREBRO_DATA_URL = '/fordjupning/fordjupning/fakta-statistik-priser--utmarkelser/information-tillganglig-for-ateranvandning/inkomna-leverantorsfakturor-reskontra--kontoklasser.html'
 
 
-def get(url):
-    try:
-        return urllib.request.urlopen(url).read()
-    except urllib.error.HTTPError as err:
-        print(f'ERROR {err.code}: Could not download {url}.')
+def get_orebro_file_list():
+    soup = Downloader.get_html_soup(OREBRO_DOMAIN + OREBRO_DATA_URL)
+    links = soup.find_all(
+        lambda tag: tag.name == "a" and "Leverantörsfakturor" in tag.text)
+    return [a['href'] for a in links]
 
 
-response = get(OREBRO_DOMAIN + OREBRO_DATA_URL)
+links = get_orebro_file_list()
 
-htmlData = html.unescape(response.decode('utf-8'))
-soup = BeautifulSoup(htmlData, 'html.parser')
-links = soup.find_all(
-    lambda tag: tag.name == "a" and "Leverantörsfakturor" in tag.text)
-links = [a['href'] for a in links]
+files = [
+    'Leverant%C3%B6rsfakturor%202018.xlsx',
+    'Leverant%C3%B6rsfakturor%202019.xlsx',
+    'Leverant%C3%B6rsfakturor%202020.xlsx'
+]
 
 for link in links:
     url = OREBRO_DOMAIN + link
-    filename = os.path.basename(url)
-    urllib.request.urlretrieve(url, filename)
-    print('\Successfully downloaded ' + filename)
+    #filename = Downloader.download_file(url)
+    #files += [filename]
+
+for filename in files:
+    convert_orebro('./', './', os.path.splitext(filename)[0])
